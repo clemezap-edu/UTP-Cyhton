@@ -26,16 +26,26 @@ let appState = {
 
 // Paleta de colores para materias
 const COLORES_MATERIAS = [
-    { bg: 'bg-purple-100', border: 'border-blue-300', text: 'text-purple-900' },
-    { bg: 'bg-green-100', border: 'border-green-300', text: 'text-green-900' },
-    { bg: 'bg-purple-100', border: 'border-purple-300', text: 'text-purple-900' },
-    { bg: 'bg-orange-100', border: 'border-orange-300', text: 'text-orange-900' },
-    { bg: 'bg-pink-100', border: 'border-pink-300', text: 'text-pink-900' },
-    { bg: 'bg-teal-100', border: 'border-teal-300', text: 'text-teal-900' },
-    { bg: 'bg-indigo-100', border: 'border-indigo-300', text: 'text-indigo-900' },
-    { bg: 'bg-yellow-100', border: 'border-yellow-300', text: 'text-yellow-900' },
-    { bg: 'bg-red-100', border: 'border-red-300', text: 'text-red-900' },
-    { bg: 'bg-cyan-100', border: 'border-cyan-300', text: 'text-cyan-900' }
+
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    { bg: 'bg-white', border: 'border-black', text: 'text-black' },
+    /*
+    { bg: 'bg-yellow-300', border: 'border-yellow-500', text: 'text-yellow-900' },
+    { bg: 'bg-purple-300', border: 'border-blue-500', text: 'text-purple-900' },
+    { bg: 'bg-pink-300', border: 'border-pink-500', text: 'text-pink-900' },
+    { bg: 'bg-teal-300', border: 'border-teal-500', text: 'text-teal-900' },
+    { bg: 'bg-red-300', border: 'border-red-500', text: 'text-red-900' },
+    { bg: 'bg-green-300', border: 'border-green-500', text: 'text-green-900' },
+    { bg: 'bg-purple-300', border: 'border-purple-500', text: 'text-purple-900' },
+    { bg: 'bg-orange-300', border: 'border-orange-500', text: 'text-orange-900' },
+    { bg: 'bg-cyan-300', border: 'border-cyan-500', text: 'text-cyan-900' }*/
 ];
 
 // Color map legacy
@@ -141,12 +151,7 @@ const screens = {
         title: "Entrada de Datos",
         icon: "edit",
         component: renderDataEntry
-    },/*
-    generation: {
-        title: "Generar Horario",
-        icon: "play",
-        component: renderGeneration
-    },*/
+    },
     visualization: {
         title: "Ver Horarios",
         icon: "calendar",
@@ -194,10 +199,7 @@ function updateNavigation() {
 
 function StatCard(iconName, title, value, color) {
     const colorClasses = {
-        blue: 'bg-purple-50 border-purple-200 text-purple-600',
-        green: 'bg-green-50 border-green-200 text-green-600',
-        purple: 'bg-purple-50 border-purple-200 text-purple-600',
-        orange: 'bg-orange-50 border-orange-200 text-orange-600'
+        blue: 'bg-white border-purple-300 text-purple-600',
     };
 
     return `
@@ -233,11 +235,10 @@ function renderDashboard() {
     content.innerHTML = `
         <div class="space-y-8">
             <!-- Estadísticas -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                ${StatCard('users', 'Profesores Activos', appState.profesores.length || 32, 'blue')}
-                ${StatCard('book', 'Materias Registradas', appState.materias.length || 58, 'green')}
-                ${StatCard('calendar', 'Grupos Asignados', appState.grupos.length || 11, 'purple')}
-                ${StatCard('clock', 'Franjas Horarias', '70', 'orange')}
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                ${StatCard('users', 'Profesores Activos', appState.profesores.length || 0, 'blue')}
+                ${StatCard('book', 'Materias Registradas', appState.materias.length || 0, 'blue')}
+                ${StatCard('calendar', 'Grupos Asignados', appState.grupos.length || 0, 'blue')}
             </div>
             
             <!-- Acciones principales -->
@@ -246,71 +247,7 @@ function renderDashboard() {
                 ${ActionCard('play', 'Generar Horario', 'Ejecutar el sistema de generación de horarios.', 'generarHorario()', true)}
                 <!-- ${ActionCard('file', 'Ver Reportes', 'Consultar reportes detallados, análisis de calidad y documentos de exportación.', 'verReportes()')} -->
             </div>
-            
-            <!-- Estado del sistema
-            <div class="bg-purple-50 border border-purple-200 rounded-xl p-5 shadow-inner">
-                <div class="flex items-start gap-4">
-                    <div class="text-purple-600 mt-0.5 flex-shrink-0">${icon('alert')}</div>
-                    <div>
-                        <h3 class="font-bold text-purple-900 text-lg">Estado del Último Horario</h3>
-                        <p class="text-sm text-purple-800 mt-1">
-                            ${appState.solucion
-            ? `<strong>Generado:</strong> ${new Date().toLocaleDateString()} | <strong>Calidad:</strong> ${appState.solucion.calidad?.toFixed(1)}% | <strong>Conflictos Duros:</strong> ${appState.solucion.conflictos_duros || 0}`
-            : '<strong>Sin horario generado.</strong> Haz clic en "Generar Horario" para crear uno nuevo.'
-        }
-                        </p>
-                        <p class="text-xs text-purple-700 mt-1">
-                            ${appState.solucion && appState.solucion.conflictos_duros === 0
-            ? 'Recomendación: Horario listo para ser distribuido.'
-            : 'Recomendación: Se requiere optimización.'}
-                        </p>
-                    </div>
-                </div>
-            </div>
-             -->
-            
-            <!-- Acciones rápidas
-            <div class="border border-gray-200 rounded-xl p-6 bg-white">
-                <h3 class="font-bold text-gray-800 mb-4 text-lg">Acciones Rápidas</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <button class="flex items-center justify-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-700 shadow-sm transition-colors" onclick="navigateTo('dataEntry')">
-                        ${iconSmall('edit')} Editar Restricciones
-                    </button>
-                    <button class="flex items-center justify-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-700 shadow-sm transition-colors" onclick="navigateTo('generation')">
-                        ${iconSmall('settings')} Configurar Parámetros
-                    </button>
-                    <button class="flex items-center justify-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-700 shadow-sm transition-colors" onclick="exportarHorario()">
-                        ${iconSmall('download')} Exportar Horario
-                    </button>
-                    <button class="flex items-center justify-center gap-2 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-sm text-gray-700 shadow-sm transition-colors" onclick="navigateTo('visualization')">
-                        ${iconSmall('calendar')} Ver Calendario
-                    </button>
-                </div>
-            </div>
-             -->
-            
-            <!-- Gestión de Horarios
-            <div class="border border-gray-200 rounded-xl p-6 bg-white">
-                <h3 class="font-bold text-gray-800 mb-4 text-lg">Gestión de Horarios Guardados</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-sm text-green-700 shadow-sm transition-colors font-medium" onclick="guardarHorarioLocal()">
-                        ${iconSmall('save')} Guardar Horario Actual
-                    </button>
-                    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg text-sm text-purple-700 shadow-sm transition-colors font-medium" onclick="cargarHorarioLocal(); navigateTo('dashboard');">
-                        ${iconSmall('upload')} Cargar Último Horario
-                    </button>
-                    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-sm text-red-700 shadow-sm transition-colors font-medium" onclick="limpiarHorarioLocal()">
-                        ${iconSmall('trash')} Limpiar Horario
-                    </button>
-                </div>
-                <p class="text-xs text-gray-500 mt-3 text-center">
-                    ${appState.eventos.length > 0 ? `✓ Horario actual: ${appState.eventos.length} eventos` : '⚠ No hay horario cargado'}
-                </p>
-            </div>
-        </div>
-         -->
-
-        <div class="space-y-8">
+ 
             <div class="grid lg:grid-cols-2 gap-6">
                 <!-- Parámetros -->
                 <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white">
@@ -527,7 +464,6 @@ function renderMateriasTab() {
                             <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">ID</th>
                             <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Nombre</th>
                             <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Horas/Semana</th>
-                            <th class="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase">Color</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100 bg-white">
@@ -538,9 +474,6 @@ function renderMateriasTab() {
                                 <td class="px-4 py-3 text-sm text-gray-700">${mat.id}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700 font-medium">${mat.nombre}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">${mat.horas_semanales} hrs</td>
-                                <td class="px-4 py-3">
-                                    <div class="${color.bg} ${color.border} border rounded px-2 py-1 text-xs ${color.text}">Muestra</div>
-                                </td>
                             </tr>`;
     }).join('')}
                     </tbody>
@@ -639,122 +572,6 @@ function renderAsignacionesTab() {
         </div>
     `;
 }
-/*
-function renderGeneration() {
-    const content = document.getElementById('screen-content');
-
-    content.innerHTML = `
-        <div class="space-y-8">
-            <div class="grid lg:grid-cols-2 gap-6">
-                <!-- Parámetros -->
-                <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white">
-                    <h3 class="font-bold text-gray-800 mb-4 text-xl">Parámetros del Algoritmo (Búsqueda Tabú)</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Número Máximo de Iteraciones</label>
-                            <input type="number" value="1000" id="max-iter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Tamaño de la Lista Tabú</label>
-                            <input type="number" value="20" id="tabu-size" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Prioridad de Optimización</label>
-                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
-                                <option>Eliminar conflictos duros primero (Default)</option>
-                                <option>Balance entre duros y blandos</option>
-                                <option>Optimización de calidad (solo blandos)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Estado -->
-                <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white">
-                    <h3 class="font-bold text-gray-800 mb-4 text-xl">Estado de la Configuración</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
-                            <span class="text-sm font-medium text-gray-700">Eventos Cargados</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-sm font-semibold text-gray-900">${appState.eventos.length}</span>
-                                <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
-                            <span class="text-sm font-medium text-gray-700">Restricciones Duras</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-sm font-semibold text-gray-900">5</span>
-                                ${icon('check')}
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
-                            <span class="text-sm font-medium text-gray-700">Restricciones Blandas</span>
-                            <div class="flex items-center gap-2">
-                                <span class="text-sm font-semibold text-gray-900">5</span>
-                                ${icon('check')}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Progreso -->
-            <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white" id="progress-section" style="display: ${appState.optimizando ? 'block' : 'none'}">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-bold text-gray-800 text-xl">Progreso de Optimización</h3>
-                    <span class="text-sm font-medium text-gray-600">Iteración <span id="iter-actual">0</span>/<span id="iter-max">1000</span></span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
-                    <div id="progress-bar" class="bg-purple-600 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
-                </div>
-                <div class="grid grid-cols-3 gap-6 mt-4">
-                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-                        <div class="text-sm text-gray-600 mb-1">Conflictos Duros</div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-900" id="conflictos-value">0</span>
-                            <span class="text-green-600 text-sm font-bold">↓</span>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-                        <div class="text-sm text-gray-600 mb-1">Penalización</div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-900" id="penalizacion-value">0</span>
-                            <span class="text-green-600 text-sm font-bold">↓</span>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-                        <div class="text-sm text-gray-600 mb-1">Calidad</div>
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-gray-900" id="calidad-value">0%</span>
-                            <span class="text-green-600 text-sm font-bold">↑</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Controles -->
-            <div class="flex gap-4">
-                <button onclick="iniciarOptimizacion()" class="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold transition-colors shadow-xl shadow-green-200/50">
-                    ${icon('play')} Iniciar Generación
-                </button>
-                <button onclick="detenerOptimizacion()" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition-colors">
-                    Detener
-                </button>
-                <button class="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium transition-colors">
-                    ${icon('save')} Guardar Configuración
-                </button>
-            </div>
-            
-            <!-- Log -->
-            <div class="bg-gray-800 rounded-xl p-4 shadow-2xl">
-                <h4 class="font-bold text-white mb-2">Log de Ejecución</h4>
-                <div id="log-container" class="space-y-1 font-mono text-xs text-green-400 max-h-40 overflow-y-auto p-1">
-                    <p>[${new Date().toLocaleTimeString()}] Sistema listo. Presiona "Iniciar Generación" para comenzar...</p>
-                </div>
-            </div>
-        </div>
-    `;
-}*/
 
 function renderVisualization() {
     const content = document.getElementById('screen-content');
@@ -810,17 +627,7 @@ function renderVisualization() {
                 </div>
             </div>
             
-            <!-- Leyenda de colores -->
-            <div class="border border-gray-200 rounded-xl p-4 bg-white">
-                <h4 class="font-semibold text-gray-700 mb-3">Leyenda de Materias</h4>
-                <div class="flex flex-wrap gap-2">
-                    ${appState.materias.slice(0, 15).map(m => {
-        const color = getMateriaColor(m.id);
-        return `<span class="${color.bg} ${color.border} border ${color.text} px-2 py-1 rounded text-xs">${m.nombre.substring(0, 20)}</span>`;
-    }).join('')}
-                    ${appState.materias.length > 15 ? '<span class="text-xs text-gray-500">...y más</span>' : ''}
-                </div>
-            </div>
+            
         </div>
     `;
 }
@@ -872,10 +679,6 @@ function actualizarVisualizacionProfesor() {
         <div class="bg-gray-100 px-6 py-3 border-b border-gray-200">
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-gray-800 text-lg">Horario: ${profesor.nombre}</h3>
-                <div class="flex gap-4 text-sm">
-                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium">${horasTotales} horas/semana</span>
-                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">${gruposAtendidos} grupos</span>
-                </div>
             </div>
         </div>
         <div class="overflow-x-auto p-4">
@@ -899,7 +702,7 @@ function actualizarVisualizacionProfesor() {
                 const color = getMateriaColor(evento.materia_id);
                 html += `
                     <td class="p-1">
-                        <div class="${color.bg} ${color.border} border rounded-lg p-2 hover:shadow-md transition-shadow">
+                        <div class="${color.bg} ${color.border} border p-2 hover:shadow-md transition-shadow">
                             <div class="text-xs font-semibold ${color.text}">${getMateriaNombre(evento.materia_id).substring(0, 18)}</div>
                             <div class="text-xs text-gray-600 mt-0.5">${getGrupoNombre(evento.grupo_id)}</div>
                         </div>
@@ -1391,10 +1194,6 @@ function actualizarVisualizacion() {
         <div class="bg-gray-100 px-6 py-3 border-b border-gray-200">
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-gray-800 text-lg">Horario Semanal: ${grupo.nombre}</h3>
-                <div class="flex gap-4 text-sm">
-                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium">${horasTotales} horas/semana</span>
-                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">${materiasUnicas} materias</span>
-                </div>
             </div>
         </div>
         <div class="overflow-x-auto p-4">
@@ -1422,7 +1221,7 @@ function actualizarVisualizacion() {
 
                 html += `
                     <td class="p-1">
-                        <div class="${color.bg} ${color.border} border rounded-lg p-2 cursor-pointer hover:shadow-md transition-shadow h-full" 
+                        <div class="${color.bg} ${color.border} border p-2 cursor-pointer hover:shadow-md transition-shadow h-full" 
                              title="${materiaNombre}\n${profNombre}">
                             <div class="text-xs font-semibold ${color.text} truncate">${materiaNombre.length > 20 ? materiaNombre.substring(0, 18) + '...' : materiaNombre}</div>
                             <div class="text-xs text-gray-600 truncate mt-0.5">${profNombre.split(' ').slice(-2).join(' ')}</div>
