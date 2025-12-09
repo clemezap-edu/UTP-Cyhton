@@ -161,6 +161,11 @@ const screens = {
         title: "Análisis",
         icon: "chart",
         component: renderConflicts
+    },
+    graph: {
+        title: "Grafo",
+        icon: "network",
+        component: renderGraph
     }
 };
 
@@ -1884,6 +1889,176 @@ function limpiarHorarioLocal() {
         alert('Horario limpiado correctamente');
         navigateTo('dashboard');
     }
+}
+
+
+function renderGraph() {
+    const content = document.getElementById('screen-content');
+
+    content.innerHTML = `
+        <div class="flex flex-col h-[calc(100vh-150px)]">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-800">Grafo de Relaciones Académicas</h3>
+                <div class="flex gap-2">
+                     <div class="flex items-center gap-2 px-3 py-1 bg-blue-100 rounded-full">
+                        <div class="w-3 h-3 rounded-full bg-blue-500"></div>
+                        <span class="text-xs font-medium text-blue-700">Grupos</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1 bg-green-100 rounded-full">
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="text-xs font-medium text-green-700">Profesores</span>
+                    </div>
+                    <div class="text-xs text-gray-500 flex items-center ml-4">
+                        <span class="mr-1">ℹ️</span> El grafo muestra las conexiones generadas en el horario actual.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-1 bg-white rounded-xl shadow-lg border border-gray-200 relative overflow-hidden">
+                 <div id="mynetwork" class="w-full h-full outline-none"></div>
+                 
+                 ${!appState.eventos || appState.eventos.length === 0 ? `
+                    <div class="absolute inset-0 flex items-center justify-center bg-white/80 z-10 backdrop-blur-sm">
+                        <div class="text-center">
+                            <div class="text-gray-400 mb-4 mx-auto w-16 h-16 flex items-center justify-center bg-gray-100 rounded-full">
+                                ${icon('chart')}
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-700 mb-2">Sin datos para visualizar</h3>
+                            <p class="text-gray-500 mb-6">Genera un horario primero para ver el grafo.</p>
+                            <button onclick="navigateTo('dashboard')" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold shadow-lg transition-transform hover:scale-105">
+                                Ir a Generación
+                            </button>
+                        </div>
+                    </div>
+                 ` : ''}
+            </div>
+        </div>
+    `;
+
+    if (!appState.eventos || appState.eventos.length === 0) return;
+
+    // Generate graph data based strictly on the schedule (appState.eventos)
+    const nodes = [];
+    const edges = [];
+    const addedNodes = new Set();
+    const relationships = new Set();
+
+    // 1. Identify all active nodes from the events
+    appState.eventos.forEach(e => {
+        // Add Group Node if not exists
+        if (!addedNodes.has(`g-${e.grupo_id}`)) {
+            const grupo = appState.grupos.find(g => g.id === e.grupo_id);
+            if (grupo) {
+                nodes.push({
+                    id: `g-${e.grupo_id}`,
+                    label: grupo.nombre,
+                    group: 'grupos',
+                    color: { background: '#3B82F6', border: '#2563EB' },
+                    font: { color: 'white', size: 16 },
+                    shape: 'box',
+                    margin: 10,
+                    shadow: true
+                });
+                addedNodes.add(`g-${e.grupo_id}`);
+            }
+        }
+
+        // Add Professor Node if not exists
+        if (!addedNodes.has(`p-${e.profesor_id}`)) {
+            const prof = appState.profesores.find(p => p.id === e.profesor_id);
+            if (prof && prof.nombre !== 'Pendiente') {
+                nodes.push({
+                    id: `p-${e.profesor_id}`,
+                    label: prof.nombre,
+                    group: 'profesores',
+                    color: { background: '#10B981', border: '#059669' },
+                    font: { color: 'white', size: 14 },
+                    shape: 'ellipse',
+                    margin: 10,
+                    shadow: true
+                });
+                addedNodes.add(`p-${e.profesor_id}`);
+            }
+        }
+
+        // Add Edge
+        const key = `${e.grupo_id}-${e.profesor_id}`;
+        if (!relationships.has(key)) {
+            relationships.add(key);
+            if (addedNodes.has(`g-${e.grupo_id}`) && addedNodes.has(`p-${e.profesor_id}`)) {
+                edges.push({
+                    from: `g-${e.grupo_id}`,
+                    to: `p-${e.profesor_id}`,
+                    color: { color: '#94a3b8', opacity: 0.5 },
+                    width: 1.5,
+                    length: 200 // Desired length of the edge
+                });
+            }
+        }
+    });
+
+    // Configuration for vis-network
+    const container = document.getElementById('mynetwork');
+    const data = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges)
+    };
+
+    const options = {
+        nodes: {
+            borderWidth: 2,
+            shadow: true,
+            font: {
+                face: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+            }
+        },
+        edges: {
+            smooth: {
+                type: 'continuous',
+                forceDirection: 'none',
+                roundness: 0.5
+            }
+        },
+        physics: {
+            enabled: true,
+            stabilization: {
+                enabled: true,
+                iterations: 2000, // Pre-calculate layout
+                updateInterval: 50,
+                onlyDynamicEdges: false,
+                fit: true
+            },
+            barnesHut: {
+                gravitationalConstant: -30000,
+                centralGravity: 0.1,
+                springLength: 200,
+                springConstant: 0.04,
+                damping: 0.09,
+                avoidOverlap: 1
+            },
+            minVelocity: 0.75
+        },
+        layout: {
+            improvedLayout: true,
+            randomSeed: 42 // Consistent layout
+        },
+        interaction: {
+            dragNodes: true, // Allow manual adjustment
+            dragView: true,  // Allow panning
+            zoomView: true,  // Allow zooming
+            hover: true,
+            navigationButtons: true, // Show zoom/pan buttons
+            keyboard: true
+        }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    // Freeze physics after stabilization to make it static
+    network.on("stabilizationIterationsDone", function () {
+        network.setOptions({ physics: false });
+        console.log("Graph stabilized and frozen.");
+    });
 }
 
 // ==================== INICIALIZACIÓN ====================
