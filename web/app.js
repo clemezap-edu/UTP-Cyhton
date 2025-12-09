@@ -26,7 +26,7 @@ let appState = {
 
 // Paleta de colores para materias
 const COLORES_MATERIAS = [
-    { bg: 'bg-blue-100', border: 'border-blue-300', text: 'text-blue-900' },
+    { bg: 'bg-purple-100', border: 'border-blue-300', text: 'text-purple-900' },
     { bg: 'bg-green-100', border: 'border-green-300', text: 'text-green-900' },
     { bg: 'bg-purple-100', border: 'border-purple-300', text: 'text-purple-900' },
     { bg: 'bg-orange-100', border: 'border-orange-300', text: 'text-orange-900' },
@@ -133,28 +133,28 @@ function contarHorasGrupo(grupoId) {
 
 const screens = {
     dashboard: {
-        title: "Pantalla Principal - Dashboard",
-        icon: "users",
+        title: "Menú",
+        icon: "home",
         component: renderDashboard
     },
     dataEntry: {
-        title: "Módulo de Entrada de Datos",
+        title: "Entrada de Datos",
         icon: "edit",
         component: renderDataEntry
-    },
+    },/*
     generation: {
-        title: "Generación y Optimización",
+        title: "Generar Horario",
         icon: "play",
         component: renderGeneration
-    },
+    },*/
     visualization: {
-        title: "Visualización de Horarios",
+        title: "Ver Horarios",
         icon: "calendar",
         component: renderVisualization
     },
     conflicts: {
-        title: "Análisis de Conflictos",
-        icon: "alert",
+        title: "Análisis",
+        icon: "chart",
         component: renderConflicts
     }
 };
@@ -168,31 +168,25 @@ function navigateTo(screenName) {
 }
 
 function updateNavigation() {
-    const mainNav = document.getElementById('main-nav');
-    const mobileNav = document.getElementById('mobile-nav');
+    const sidebarNav = document.getElementById('sidebar-nav');
 
-    mainNav.innerHTML = '';
-    mobileNav.innerHTML = '';
+    if (!sidebarNav) return;
+
+    sidebarNav.innerHTML = '';
 
     Object.keys(screens).forEach(key => {
         const screen = screens[key];
         const isActive = appState.currentScreen === key;
 
-        // Desktop nav
-        const btn = document.createElement('button');
-        btn.onclick = () => navigateTo(key);
-        btn.className = `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${isActive ? 'bg-blue-600 text-white shadow-lg shadow-blue-200/50' : 'text-gray-700 hover:bg-gray-100'
-            }`;
-        btn.innerHTML = `${icon(screen.icon)} ${screen.title.split(' - ')[0]}`;
-        mainNav.appendChild(btn);
-
-        // Mobile nav
-        const mobileBtn = document.createElement('button');
-        mobileBtn.onclick = () => navigateTo(key);
-        mobileBtn.className = `flex-shrink-0 px-3 py-1 rounded-lg text-xs font-medium ${isActive ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-            }`;
-        mobileBtn.textContent = screen.title.split(' - ')[0];
-        mobileNav.appendChild(mobileBtn);
+        // Sidebar nav item
+        const navItem = document.createElement('div');
+        navItem.onclick = () => navigateTo(key);
+        navItem.className = `sidebar-link flex items-center gap-3 px-4 py-3 mb-2 rounded-lg cursor-pointer ${isActive ? 'active' : ''}`;
+        navItem.innerHTML = `
+            <svg class="w-5 h-5 flex-shrink-0"><use href="#icon-${screen.icon}"></use></svg>
+            <span class="text-sm font-medium">${screen.title}</span>
+        `;
+        sidebarNav.appendChild(navItem);
     });
 }
 
@@ -200,7 +194,7 @@ function updateNavigation() {
 
 function StatCard(iconName, title, value, color) {
     const colorClasses = {
-        blue: 'bg-blue-50 border-blue-200 text-blue-600',
+        blue: 'bg-purple-50 border-purple-200 text-purple-600',
         green: 'bg-green-50 border-green-200 text-green-600',
         purple: 'bg-purple-50 border-purple-200 text-purple-600',
         orange: 'bg-orange-50 border-orange-200 text-orange-600'
@@ -218,12 +212,12 @@ function StatCard(iconName, title, value, color) {
 function ActionCard(iconName, title, description, action, primary = false) {
     return `
         <div class="border border-gray-200 rounded-xl p-6 bg-white hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-            <div class="${primary ? 'text-blue-600' : 'text-gray-600'} mb-3">
+            <div class="${primary ? 'text-purple-600' : 'text-gray-600'} mb-3">
                 ${icon(iconName)}
             </div>
             <h3 class="font-semibold text-gray-800 mb-2">${title}</h3>
             <p class="text-sm text-gray-600 mb-4 flex-grow">${description}</p>
-            <button class="w-full px-4 py-2 text-sm font-medium rounded-lg transition-colors ${primary ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+            <button class="w-full px-4 py-2 text-sm font-medium rounded-lg transition-colors ${primary ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-md' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
         }" onclick="${action}">
                 ${action.includes('generar') ? 'Generar Ahora' : action.includes('importar') ? 'Importar' : 'Abrir Reportes'}
             </button>
@@ -247,25 +241,25 @@ function renderDashboard() {
             </div>
             
             <!-- Acciones principales -->
-            <div class="grid lg:grid-cols-3 gap-6">
-                ${ActionCard('upload', 'Importar Datos', 'Cargar o actualizar la información de profesores, materias y aulas desde archivos CSV o Excel.', 'importarDatos()')}
-                ${ActionCard('play', 'Generar Horario', 'Ejecutar el algoritmo de Búsqueda Tabú para crear un nuevo horario optimizado.', 'generarHorario()', true)}
-                ${ActionCard('file', 'Ver Reportes', 'Consultar reportes detallados, análisis de calidad y documentos de exportación.', 'verReportes()')}
+            <div class="grid lg:grid-cols-2 gap-6">
+                ${ActionCard('upload', 'Importar Datos', 'Carga el archivo json.', 'importarDatos()')}
+                ${ActionCard('play', 'Generar Horario', 'Ejecutar el sistema de generación de horarios.', 'generarHorario()', true)}
+                <!-- ${ActionCard('file', 'Ver Reportes', 'Consultar reportes detallados, análisis de calidad y documentos de exportación.', 'verReportes()')} -->
             </div>
             
-            <!-- Estado del sistema -->
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 shadow-inner">
+            <!-- Estado del sistema
+            <div class="bg-purple-50 border border-purple-200 rounded-xl p-5 shadow-inner">
                 <div class="flex items-start gap-4">
-                    <div class="text-blue-600 mt-0.5 flex-shrink-0">${icon('alert')}</div>
+                    <div class="text-purple-600 mt-0.5 flex-shrink-0">${icon('alert')}</div>
                     <div>
-                        <h3 class="font-bold text-blue-900 text-lg">Estado del Último Horario</h3>
-                        <p class="text-sm text-blue-800 mt-1">
+                        <h3 class="font-bold text-purple-900 text-lg">Estado del Último Horario</h3>
+                        <p class="text-sm text-purple-800 mt-1">
                             ${appState.solucion
             ? `<strong>Generado:</strong> ${new Date().toLocaleDateString()} | <strong>Calidad:</strong> ${appState.solucion.calidad?.toFixed(1)}% | <strong>Conflictos Duros:</strong> ${appState.solucion.conflictos_duros || 0}`
             : '<strong>Sin horario generado.</strong> Haz clic en "Generar Horario" para crear uno nuevo.'
         }
                         </p>
-                        <p class="text-xs text-blue-700 mt-1">
+                        <p class="text-xs text-purple-700 mt-1">
                             ${appState.solucion && appState.solucion.conflictos_duros === 0
             ? 'Recomendación: Horario listo para ser distribuido.'
             : 'Recomendación: Se requiere optimización.'}
@@ -273,8 +267,9 @@ function renderDashboard() {
                     </div>
                 </div>
             </div>
+             -->
             
-            <!-- Acciones rápidas -->
+            <!-- Acciones rápidas
             <div class="border border-gray-200 rounded-xl p-6 bg-white">
                 <h3 class="font-bold text-gray-800 mb-4 text-lg">Acciones Rápidas</h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -292,15 +287,16 @@ function renderDashboard() {
                     </button>
                 </div>
             </div>
+             -->
             
-            <!-- Gestión de Horarios -->
+            <!-- Gestión de Horarios
             <div class="border border-gray-200 rounded-xl p-6 bg-white">
                 <h3 class="font-bold text-gray-800 mb-4 text-lg">Gestión de Horarios Guardados</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <button class="flex items-center justify-center gap-2 px-4 py-2 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-sm text-green-700 shadow-sm transition-colors font-medium" onclick="guardarHorarioLocal()">
                         ${iconSmall('save')} Guardar Horario Actual
                     </button>
-                    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg text-sm text-blue-700 shadow-sm transition-colors font-medium" onclick="cargarHorarioLocal(); navigateTo('dashboard');">
+                    <button class="flex items-center justify-center gap-2 px-4 py-2 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-lg text-sm text-purple-700 shadow-sm transition-colors font-medium" onclick="cargarHorarioLocal(); navigateTo('dashboard');">
                         ${iconSmall('upload')} Cargar Último Horario
                     </button>
                     <button class="flex items-center justify-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg text-sm text-red-700 shadow-sm transition-colors font-medium" onclick="limpiarHorarioLocal()">
@@ -312,6 +308,118 @@ function renderDashboard() {
                 </p>
             </div>
         </div>
+         -->
+
+        <div class="space-y-8">
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Parámetros -->
+                <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white">
+                    <h3 class="font-bold text-gray-800 mb-4 text-xl">Parámetros de la búsqueda</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Número Máximo de Iteraciones</label>
+                            <input type="number" value="1000" id="max-iter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Tamaño de la Lista Tabú</label>
+                            <input type="number" value="20" id="tabu-size" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1">Prioridad de Optimización</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option>Eliminar conflictos duros primero (Default)</option>
+                                <option>Balance entre duros y blandos</option>
+                                <option>Optimización de calidad (solo blandos)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Estado -->
+                <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white">
+                    <h3 class="font-bold text-gray-800 mb-4 text-xl">Estado de la Configuración</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
+                            <span class="text-sm font-medium text-gray-700">Eventos Cargados</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-semibold text-gray-900">${appState.eventos.length}</span>
+                                <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
+                            <span class="text-sm font-medium text-gray-700">Restricciones Duras</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-semibold text-gray-900">5</span>
+                                ${icon('check')}
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
+                            <span class="text-sm font-medium text-gray-700">Restricciones Blandas</span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm font-semibold text-gray-900">5</span>
+                                ${icon('check')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progreso -->
+            <div class="border border-gray-200 rounded-xl p-6 shadow-lg bg-white" id="progress-section" style="display: ${appState.optimizando ? 'block' : 'none'}">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-800 text-xl">Progreso de Optimización</h3>
+                    <span class="text-sm font-medium text-gray-600">Iteración <span id="iter-actual">0</span>/<span id="iter-max">1000</span></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
+                    <div id="progress-bar" class="bg-purple-600 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <div class="grid grid-cols-3 gap-6 mt-4">
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <div class="text-sm text-gray-600 mb-1">Conflictos Duros</div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900" id="conflictos-value">0</span>
+                            <span class="text-green-600 text-sm font-bold">↓</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <div class="text-sm text-gray-600 mb-1">Penalización</div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900" id="penalizacion-value">0</span>
+                            <span class="text-green-600 text-sm font-bold">↓</span>
+                        </div>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <div class="text-sm text-gray-600 mb-1">Calidad</div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-bold text-gray-900" id="calidad-value">0%</span>
+                            <span class="text-green-600 text-sm font-bold">↑</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controles -->
+            <div class="flex gap-4">
+                <button onclick="iniciarOptimizacion()" class="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 font-bold transition-colors shadow-xl shadow-green-200/50">
+                    ${icon('play')} Iniciar Generación
+                </button>
+                <button onclick="detenerOptimizacion()" class="flex items-center gap-2 px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 font-semibold transition-colors">
+                    Detener
+                </button>
+                <button class="flex items-center gap-2 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 font-medium transition-colors">
+                    ${icon('save')} Guardar Configuración
+                </button>
+            </div>
+            
+            <!-- Log -->
+            <div class="bg-gray-800 rounded-xl p-4 shadow-2xl">
+                <h4 class="font-bold text-white mb-2">Log de Ejecución</h4>
+                <div id="log-container" class="space-y-1 font-mono text-xs text-green-400 max-h-40 overflow-y-auto p-1">
+                    <p>[${new Date().toLocaleTimeString()}] Sistema listo. Presiona "Iniciar Generación" para comenzar...</p>
+                </div>
+            </div>
+        </div>
+
     `;
 }
 
@@ -325,7 +433,7 @@ function renderDataEntry() {
             <!-- Tabs -->
             <div class="flex flex-wrap gap-3 border-b border-gray-200 pb-3">
                 ${tabs.map((tab, i) => `
-                    <button onclick="cambiarTabDataEntry('${tab}')" class="px-4 py-2 rounded-lg font-medium transition-colors text-sm ${appState.dataEntryTab === tab ? 'bg-blue-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    <button onclick="cambiarTabDataEntry('${tab}')" class="px-4 py-2 rounded-lg font-medium transition-colors text-sm ${appState.dataEntryTab === tab ? 'bg-purple-600 text-white shadow-md' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
         }">${tabLabels[i]} (${getTabCount(tab)})</button>
                 `).join('')}
             </div>
@@ -472,7 +580,7 @@ function renderAulasTab() {
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             ${appState.aulas.map(aula => `
                 <div class="border border-gray-200 rounded-xl p-4 bg-white hover:shadow-lg transition-shadow text-center">
-                    <div class="w-12 h-12 mx-auto mb-2 bg-blue-100 rounded-full flex items-center justify-center">
+                    <div class="w-12 h-12 mx-auto mb-2 bg-purple-100 rounded-full flex items-center justify-center">
                         ${icon('calendar')}
                     </div>
                     <h4 class="font-bold text-gray-800">${aula.nombre}</h4>
@@ -519,7 +627,7 @@ function renderAsignacionesTab() {
                     <tbody class="divide-y divide-gray-100 bg-white">
                         ${rows.map(r => `
                             <tr class="hover:bg-gray-50 transition-colors">
-                                <td class="px-4 py-3 text-sm font-semibold text-blue-700">${r.grupo}</td>
+                                <td class="px-4 py-3 text-sm font-semibold text-purple-700">${r.grupo}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">${r.materia}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">${r.profesor}</td>
                                 <td class="px-4 py-3 text-sm text-gray-700">${r.horas} hrs</td>
@@ -531,7 +639,7 @@ function renderAsignacionesTab() {
         </div>
     `;
 }
-
+/*
 function renderGeneration() {
     const content = document.getElementById('screen-content');
 
@@ -569,7 +677,7 @@ function renderGeneration() {
                             <span class="text-sm font-medium text-gray-700">Eventos Cargados</span>
                             <div class="flex items-center gap-2">
                                 <span class="text-sm font-semibold text-gray-900">${appState.eventos.length}</span>
-                                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                                <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
                             </div>
                         </div>
                         <div class="flex items-center justify-between p-3 bg-white border border-gray-100 rounded-lg shadow-sm">
@@ -597,7 +705,7 @@ function renderGeneration() {
                     <span class="text-sm font-medium text-gray-600">Iteración <span id="iter-actual">0</span>/<span id="iter-max">1000</span></span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-4 mb-4">
-                    <div id="progress-bar" class="bg-blue-600 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    <div id="progress-bar" class="bg-purple-600 h-4 rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
                 <div class="grid grid-cols-3 gap-6 mt-4">
                     <div class="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
@@ -646,7 +754,7 @@ function renderGeneration() {
             </div>
         </div>
     `;
-}
+}*/
 
 function renderVisualization() {
     const content = document.getElementById('screen-content');
@@ -657,7 +765,7 @@ function renderVisualization() {
                 <div class="text-gray-400 mb-4">${icon('calendar')}</div>
                 <h3 class="text-xl font-bold text-gray-700 mb-2">No hay horarios para visualizar</h3>
                 <p class="text-gray-500 mb-6">Genera un horario primero desde la sección "Generación y Optimización"</p>
-                <button onclick="navigateTo('generation')" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">
+                <button onclick="navigateTo('dashboard')" class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">
                     Ir a Generación
                 </button>
             </div>
@@ -669,7 +777,7 @@ function renderVisualization() {
         <div class="space-y-8">
             <!-- Tabs de vista -->
             <div class="flex gap-2 border-b border-gray-200 pb-3">
-                <button onclick="cambiarVistaHorario('grupo')" id="btn-vista-grupo" class="px-4 py-2 rounded-lg font-medium text-sm bg-blue-600 text-white">Por Grupo</button>
+                <button onclick="cambiarVistaHorario('grupo')" id="btn-vista-grupo" class="px-4 py-2 rounded-lg font-medium text-sm bg-purple-600 text-white">Por Grupo</button>
                 <button onclick="cambiarVistaHorario('profesor')" id="btn-vista-profesor" class="px-4 py-2 rounded-lg font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200">Por Profesor</button>
             </div>
             
@@ -688,7 +796,7 @@ function renderVisualization() {
                     <button onclick="exportarExcel()" class="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm font-medium transition-colors">
                         ${iconSmall('download')} Excel/CSV
                     </button>
-                    <button onclick="exportarTodosGruposCSV()" class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors">
+                    <button onclick="exportarTodosGruposCSV()" class="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm font-medium transition-colors">
                         ${iconSmall('download')} Todos
                     </button>
                 </div>
@@ -723,7 +831,7 @@ function cambiarVistaHorario(tipo) {
     const controles = document.getElementById('controles-vista');
 
     if (tipo === 'grupo') {
-        btnGrupo.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-blue-600 text-white';
+        btnGrupo.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-purple-600 text-white';
         btnProfesor.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200';
         controles.innerHTML = `
             <select id="grupo-select" onchange="actualizarVisualizacion()" class="px-3 py-2 border border-gray-300 rounded-lg text-sm min-w-48">
@@ -733,7 +841,7 @@ function cambiarVistaHorario(tipo) {
         `;
     } else {
         btnGrupo.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-gray-100 text-gray-700 hover:bg-gray-200';
-        btnProfesor.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-blue-600 text-white';
+        btnProfesor.className = 'px-4 py-2 rounded-lg font-medium text-sm bg-purple-600 text-white';
         controles.innerHTML = `
             <select id="profesor-select" onchange="actualizarVisualizacionProfesor()" class="px-3 py-2 border border-gray-300 rounded-lg text-sm min-w-48">
                 <option value="">Selecciona un profesor...</option>
@@ -826,7 +934,7 @@ function renderConflicts() {
                     <div class="text-sm text-gray-600 mt-1">Violaciones Blandas</div>
                 </div>
                 <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-lg text-center">
-                    <div class="text-4xl font-bold text-blue-600">${appState.eventos.length}</div>
+                    <div class="text-4xl font-bold text-purple-600">${appState.eventos.length}</div>
                     <div class="text-sm text-gray-600 mt-1">Eventos Totales</div>
                 </div>
             </div>
@@ -862,7 +970,7 @@ function renderConflicts() {
         return `
                             <div class="bg-gray-50 rounded-lg p-3 text-center border">
                                 <div class="font-semibold text-gray-800">${g.nombre}</div>
-                                <div class="text-2xl font-bold text-blue-600">${horas}</div>
+                                <div class="text-2xl font-bold text-purple-600">${horas}</div>
                                 <div class="text-xs text-gray-500">horas/sem</div>
                             </div>
                         `;
@@ -909,7 +1017,7 @@ function renderConflicts() {
             <div class="border border-gray-200 rounded-xl p-6 bg-white shadow-lg">
                 <h3 class="font-bold text-gray-800 mb-4 text-xl">Acciones de Mejora</h3>
                 <div class="grid md:grid-cols-3 gap-4">
-                    <button onclick="reoptimizarHorario()" class="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold transition-colors shadow-md">
+                    <button onclick="reoptimizarHorario()" class="px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold transition-colors shadow-md">
                         ${icon('play')} Re-optimizar Todo
                     </button>
                     <button onclick="limpiarYRegenerar()" class="px-4 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-semibold transition-colors shadow-md">
@@ -1029,7 +1137,7 @@ function generarHorario() {
         alert('Primero debes cargar los datos (profesores, materias, grupos)');
         return;
     }
-    navigateTo('generation');
+    navigateTo('dashboard');
 }
 
 function reoptimizarHorario() {
@@ -1058,7 +1166,7 @@ function limpiarYRegenerar() {
     appState.solucion = null;
     localStorage.removeItem('horario_iti');
 
-    navigateTo('generation');
+    navigateTo('dashboard');
 }
 
 function navegarAVisualizacion() {
@@ -1284,7 +1392,7 @@ function actualizarVisualizacion() {
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-gray-800 text-lg">Horario Semanal: ${grupo.nombre}</h3>
                 <div class="flex gap-4 text-sm">
-                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-medium">${horasTotales} horas/semana</span>
+                    <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-medium">${horasTotales} horas/semana</span>
                     <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full font-medium">${materiasUnicas} materias</span>
                 </div>
             </div>

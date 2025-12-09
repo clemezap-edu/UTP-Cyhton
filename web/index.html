@@ -1,44 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Horarios ITI - UPV</title>
+    <title>UTP-Cython</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .5; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
         }
-        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #8b5cf6;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        /* Sidebar hover effects */
+        .sidebar-link {
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            background-color: rgba(139, 92, 246, 0.2);
+            transform: translateX(5px);
+        }
+
+        .sidebar-link.active {
+            background-color: #8b5cf6;
+            color: white;
+        }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <!-- Navegación -->
-    <header class="bg-white border-b border-gray-200 shadow-md sticky top-0 z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-            <h1 class="text-3xl font-extrabold text-blue-700">Sistema de Horarios ITI - UPV</h1>
-            <nav class="hidden md:flex gap-2" id="main-nav">
-                <!-- Navegación generada dinámicamente -->
-            </nav>
-        </div>
-        <!-- Navegación móvil -->
-        <div class="md:hidden flex overflow-x-auto gap-1 p-2 bg-gray-50 border-t" id="mobile-nav">
-            <!-- Navegación móvil generada dinámicamente -->
-        </div>
-    </header>
 
-    <!-- Contenido Principal -->
-    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-6 sm:p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-3" id="screen-title">
-                Pantalla Principal - Dashboard
-            </h2>
-            <div id="screen-content">
-                <!-- Contenido dinámico -->
-            </div>
+<body class="bg-gray-50 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside
+        class="w-64 bg-gradient-to-b from-purple-700 to-purple-900 text-white flex-shrink-0 flex flex-col h-screen sticky top-0 shadow-2xl">
+        <!-- Logo Section -->
+        <div class="p-6 border-b border-purple-600">
+            <h1 class="text-2xl font-bold tracking-wider">UTP-Cython</h1>
+            <p class="text-xs text-purple-200 mt-1">Sistema de generación de horarios</p>
         </div>
-    </main>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 overflow-y-auto py-6 px-3" id="sidebar-nav">
+            <!-- Navigation items will be generated dynamically -->
+        </nav>
+
+        <!-- Footer info -->
+        <div class="p-4 border-t border-purple-600 text-xs text-purple-200">
+            <p>Integrantes:</p>
+            <p class="mt-1">Ricardo Sebastián Balderas Gonzalez</p>
+            <p class="mt-1">Walter Leonardo Loera Gómez</p>
+            <p class="mt-1">Jose Oswaldo Tienda Mendoza</p>
+            <p class="mt-1">Clemente Ramón Zapata Lerma</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-h-screen overflow-hidden">
+        <!-- Top Header -->
+        <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-800" id="screen-title">
+                    Visualización de Horarios
+                </h2>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-6">
+            <div class="max-w-7xl mx-auto">
+                <div id="screen-content" class="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
 
     <!-- SVG Icons (embedded) -->
     <svg style="display: none;">
@@ -108,8 +173,18 @@
             <polyline points="17 21 17 13 7 13 7 21"></polyline>
             <polyline points="7 3 7 8 15 8"></polyline>
         </symbol>
+        <symbol id="icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </symbol>
+        <symbol id="icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="20" x2="12" y2="10"></line>
+            <line x1="18" y1="20" x2="18" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="16"></line>
+        </symbol>
     </svg>
 
     <script src="app.js"></script>
 </body>
+
 </html>
