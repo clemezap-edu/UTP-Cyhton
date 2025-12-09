@@ -1,0 +1,109 @@
+{
+  "profesores": [
+    {"id": 0, "nombre": "Dr. Said Polanco Martagón", "max_horas": 12, "preferencias_horarias": [0, 1, 13, 27, 41]},
+    {"id": 1, "nombre": "Dr. Jean-Michael Clavel", "max_horas": 15, "preferencias_horarias": [55, 56, 57, 58]},
+    {"id": 2, "nombre": "Dra. Karla E. Vázquez Parra", "max_horas": 12, "preferencias_horarias": [60, 61, 62]},
+    {"id": 3, "nombre": "M.I. Arturo G. Mascorro", "max_horas": 18, "preferencias_horarias": []},
+    {"id": 4, "nombre": "M.C. Omar Jasso García", "max_horas": 15, "preferencias_horarias": [14, 28, 42]},
+    {"id": 5, "nombre": "M.C. Alma D. Amaya Vázquez", "max_horas": 12, "preferencias_horarias": []},
+    {"id": 6, "nombre": "Lic. Ricardo Torres Hernández", "max_horas": 15, "preferencias_horarias": [0, 14, 28]},
+    {"id": 7, "nombre": "Dr. Carlos Mendoza Silva", "max_horas": 12, "preferencias_horarias": []},
+    {"id": 8, "nombre": "M.C. Patricia Ramírez López", "max_horas": 15, "preferencias_horarias": [50, 51, 64, 65]},
+    {"id": 9, "nombre": "Ing. Roberto Sánchez Cruz", "max_horas": 18, "preferencias_horarias": []}
+  ],
+  
+  "materias": [
+    {"id": 0, "nombre": "Estructura de Datos", "horas_semanales": 5, "requiere_laboratorio": true, "color": "blue"},
+    {"id": 1, "nombre": "Ingeniería de Requerimientos", "horas_semanales": 4, "requiere_laboratorio": false, "color": "green"},
+    {"id": 2, "nombre": "Diseño de Base de Datos", "horas_semanales": 5, "requiere_laboratorio": true, "color": "orange"},
+    {"id": 3, "nombre": "Inglés V", "horas_semanales": 5, "requiere_laboratorio": false, "color": "purple"},
+    {"id": 4, "nombre": "Matemáticas Discretas", "horas_semanales": 6, "requiere_laboratorio": false, "color": "blue"},
+    {"id": 5, "nombre": "Programación Orientada a Objetos", "horas_semanales": 6, "requiere_laboratorio": true, "color": "green"},
+    {"id": 6, "nombre": "Arquitectura de Computadoras", "horas_semanales": 5, "requiere_laboratorio": false, "color": "orange"},
+    {"id": 7, "nombre": "Algoritmos Avanzados", "horas_semanales": 5, "requiere_laboratorio": true, "color": "blue"},
+    {"id": 8, "nombre": "Sistemas Operativos", "horas_semanales": 5, "requiere_laboratorio": true, "color": "purple"},
+    {"id": 9, "nombre": "Redes de Computadoras", "horas_semanales": 4, "requiere_laboratorio": true, "color": "green"}
+  ],
+  
+  "grupos": [
+    {"id": 0, "nombre": "ITI 1-1", "num_estudiantes": 28, "turno_matutino": false},
+    {"id": 1, "nombre": "ITI 2-1", "num_estudiantes": 32, "turno_matutino": true},
+    {"id": 2, "nombre": "ITI 2-2", "num_estudiantes": 30, "turno_matutino": true},
+    {"id": 3, "nombre": "ITI 2-3", "num_estudiantes": 25, "turno_matutino": false},
+    {"id": 4, "nombre": "ITI 4-1", "num_estudiantes": 22, "turno_matutino": false},
+    {"id": 5, "nombre": "ITI 5-1", "num_estudiantes": 35, "turno_matutino": true},
+    {"id": 6, "nombre": "ITI 5-2", "num_estudiantes": 33, "turno_matutino": true},
+    {"id": 7, "nombre": "ITI 5-3", "num_estudiantes": 27, "turno_matutino": false},
+    {"id": 8, "nombre": "ITI 7-1", "num_estudiantes": 20, "turno_matutino": true},
+    {"id": 9, "nombre": "ITI 8-1", "num_estudiantes": 18, "turno_matutino": true},
+    {"id": 10, "nombre": "ITI 8-2", "num_estudiantes": 16, "turno_matutino": false}
+  ],
+  
+  "aulas": [
+    {"id": 0, "nombre": "Aula A1", "capacidad": 40, "es_laboratorio": false},
+    {"id": 1, "nombre": "Aula A2", "capacidad": 35, "es_laboratorio": false},
+    {"id": 2, "nombre": "Laboratorio Z1", "capacidad": 30, "es_laboratorio": true},
+    {"id": 3, "nombre": "Laboratorio Z2", "capacidad": 30, "es_laboratorio": true},
+    {"id": 4, "nombre": "Laboratorio Z3", "capacidad": 35, "es_laboratorio": true},
+    {"id": 5, "nombre": "Aula B1", "capacidad": 45, "es_laboratorio": false},
+    {"id": 6, "nombre": "Aula B2", "capacidad": 40, "es_laboratorio": false},
+    {"id": 7, "nombre": "Laboratorio Cómputo 1", "capacidad": 32, "es_laboratorio": true},
+    {"id": 8, "nombre": "Laboratorio Cómputo 2", "capacidad": 32, "es_laboratorio": true},
+    {"id": 9, "nombre": "Aula Multimedia", "capacidad": 50, "es_laboratorio": false}
+  ],
+  
+  "asignaciones": {
+    "5": {
+      "0": 0,
+      "1": 5,
+      "2": 4,
+      "3": 6
+    },
+    "6": {
+      "0": 0,
+      "1": 5,
+      "2": 4,
+      "3": 6
+    },
+    "1": {
+      "4": 7,
+      "5": 1,
+      "6": 3
+    },
+    "2": {
+      "4": 7,
+      "5": 1,
+      "6": 3
+    },
+    "8": {
+      "7": 0,
+      "8": 9,
+      "9": 8
+    },
+    "9": {
+      "7": 0,
+      "8": 9,
+      "9": 8
+    },
+    "0": {
+      "4": 7,
+      "5": 1
+    },
+    "3": {
+      "5": 1,
+      "6": 3
+    },
+    "4": {
+      "7": 2,
+      "9": 8
+    },
+    "7": {
+      "0": 0,
+      "2": 4
+    },
+    "10": {
+      "8": 9,
+      "9": 8
+    }
+  }
+}

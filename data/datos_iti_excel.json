@@ -1,0 +1,448 @@
+{
+  "profesores": [
+    {
+      "id": 0,
+      "nombre": "Alma Leticia Valdéz García"
+    },
+    {
+      "id": 1,
+      "nombre": "Dr. Alberto García Robledo"
+    },
+    {
+      "id": 2,
+      "nombre": "Dr. Hector Hugo Avilés Arriaga"
+    },
+    {
+      "id": 3,
+      "nombre": "Dr. Jean-Michael Recher"
+    },
+    {
+      "id": 4,
+      "nombre": "Dr. Marco A. Nuño Maganda"
+    },
+    {
+      "id": 5,
+      "nombre": "Dra. Karla E. Vázquez Ortiz"
+    },
+    {
+      "id": 6,
+      "nombre": "Eduardo Patricio González Nuño"
+    },
+    {
+      "id": 7,
+      "nombre": "Fernando Requena"
+    },
+    {
+      "id": 8,
+      "nombre": "Ing. Hugo E. Treviño"
+    },
+    {
+      "id": 9,
+      "nombre": "Ing. Juan Manuel Ornelas Llerena"
+    },
+    {
+      "id": 10,
+      "nombre": "Lic. Myriam Ornelas Llerena"
+    },
+    {
+      "id": 11,
+      "nombre": "M.A.T. Hiram Herrera Rivas"
+    },
+    {
+      "id": 12,
+      "nombre": "M.C. Jorge O. Jasso Luna"
+    },
+    {
+      "id": 13,
+      "nombre": "M.C. Maribel Marin Castro"
+    },
+    {
+      "id": 14,
+      "nombre": "M.I. Adriana Lizeth Trujillo"
+    },
+    {
+      "id": 15,
+      "nombre": "M.I. Arturo G. Mascorro Cienfuegos"
+    },
+    {
+      "id": 16,
+      "nombre": "M.I. Erendira Guitierrez Meza"
+    },
+    {
+      "id": 17,
+      "nombre": "M.I. Hugo O. Camargo"
+    },
+    {
+      "id": 18,
+      "nombre": "M.I. Luis R. De la Fuente"
+    },
+    {
+      "id": 19,
+      "nombre": "M.I. Manuel Ruiz Méndez"
+    },
+    {
+      "id": 20,
+      "nombre": "M.S.I. Alma Delia Amaya Vázquez"
+    },
+    {
+      "id": 21,
+      "nombre": "M.S.I. José Fidencio López Luna"
+    },
+    {
+      "id": 22,
+      "nombre": "M.S.I. Marina Cristal Flores Flores"
+    },
+    {
+      "id": 23,
+      "nombre": "M.S.I. Mario H. Rodriguez Chávez"
+    },
+    {
+      "id": 24,
+      "nombre": "M.T.I. Israel Pulido Picazo"
+    }
+  ],
+  "materias": [
+    {
+      "id": 0,
+      "nombre": "Administración de Sistemas Integrales",
+      "horas_semanales": 3
+    },
+    {
+      "id": 1,
+      "nombre": "Algoritmos",
+      "horas_semanales": 6
+    },
+    {
+      "id": 2,
+      "nombre": "Arquitectura de Computadoras",
+      "horas_semanales": 5
+    },
+    {
+      "id": 3,
+      "nombre": "Diseño de Bases de Datos",
+      "horas_semanales": 10
+    },
+    {
+      "id": 4,
+      "nombre": "Diseño de Interfaces",
+      "horas_semanales": 5
+    },
+    {
+      "id": 5,
+      "nombre": "Estructura de Datos",
+      "horas_semanales": 12
+    },
+    {
+      "id": 6,
+      "nombre": "Fundamentos de Física",
+      "horas_semanales": 12
+    },
+    {
+      "id": 7,
+      "nombre": "Fundamentos de Redes",
+      "horas_semanales": 10
+    },
+    {
+      "id": 8,
+      "nombre": "Graficación Por Computadora Avanzada",
+      "horas_semanales": 6
+    },
+    {
+      "id": 9,
+      "nombre": "Habilidades Organizacionales",
+      "horas_semanales": 6
+    },
+    {
+      "id": 10,
+      "nombre": "Herramientas Multimedia",
+      "horas_semanales": 8
+    },
+    {
+      "id": 11,
+      "nombre": "Herramientas Ofimáticas",
+      "horas_semanales": 4
+    },
+    {
+      "id": 12,
+      "nombre": "Ingeniería de Requerimientos",
+      "horas_semanales": 8
+    },
+    {
+      "id": 13,
+      "nombre": "Inteligencia Emocional",
+      "horas_semanales": 6
+    },
+    {
+      "id": 14,
+      "nombre": "Introducción a la Graficación por Computadora",
+      "horas_semanales": 6
+    },
+    {
+      "id": 15,
+      "nombre": "Introducción a la ITI",
+      "horas_semanales": 3
+    },
+    {
+      "id": 16,
+      "nombre": "Introducción a la Programación Orientada a Objetos",
+      "horas_semanales": 6
+    },
+    {
+      "id": 17,
+      "nombre": "Introducción a las Bases de Datos",
+      "horas_semanales": 5
+    },
+    {
+      "id": 18,
+      "nombre": "Lógica Computacional",
+      "horas_semanales": 6
+    },
+    {
+      "id": 19,
+      "nombre": "Matemáticas Básicas",
+      "horas_semanales": 6
+    },
+    {
+      "id": 20,
+      "nombre": "Matemáticas Discretas",
+      "horas_semanales": 12
+    },
+    {
+      "id": 21,
+      "nombre": "Minería de Datos Aplicada",
+      "horas_semanales": 5
+    },
+    {
+      "id": 22,
+      "nombre": "Negocios Electrónicos",
+      "horas_semanales": 3
+    },
+    {
+      "id": 23,
+      "nombre": "Probabilidad y Estadística",
+      "horas_semanales": 12
+    },
+    {
+      "id": 24,
+      "nombre": "Programación Orientada a Objetos",
+      "horas_semanales": 6
+    },
+    {
+      "id": 25,
+      "nombre": "Programación WEB",
+      "horas_semanales": 5
+    },
+    {
+      "id": 26,
+      "nombre": "Proyectos de Tecnologías de la Información",
+      "horas_semanales": 3
+    },
+    {
+      "id": 27,
+      "nombre": "Seguridad Informática",
+      "horas_semanales": 5
+    },
+    {
+      "id": 28,
+      "nombre": "Seminario de Investigación",
+      "horas_semanales": 4
+    },
+    {
+      "id": 29,
+      "nombre": "Switcheo y Wireless",
+      "horas_semanales": 6
+    },
+    {
+      "id": 30,
+      "nombre": "Tecnologías WAN",
+      "horas_semanales": 10
+    },
+    {
+      "id": 31,
+      "nombre": "Álgebra Lineal",
+      "horas_semanales": 6
+    }
+  ],
+  "grupos": [
+    {
+      "id": 0,
+      "nombre": "ITI 1-1"
+    },
+    {
+      "id": 1,
+      "nombre": "ITI 2-1"
+    },
+    {
+      "id": 2,
+      "nombre": "ITI 2-2"
+    },
+    {
+      "id": 3,
+      "nombre": "ITI 2-3"
+    },
+    {
+      "id": 4,
+      "nombre": "ITI 4-1"
+    },
+    {
+      "id": 5,
+      "nombre": "ITI 5-1"
+    },
+    {
+      "id": 6,
+      "nombre": "ITI 5-2"
+    },
+    {
+      "id": 7,
+      "nombre": "ITI 5-3"
+    },
+    {
+      "id": 8,
+      "nombre": "ITI 7-1"
+    },
+    {
+      "id": 9,
+      "nombre": "ITI 8-1"
+    },
+    {
+      "id": 10,
+      "nombre": "ITI 8-2"
+    }
+  ],
+  "aulas": [
+    {
+      "id": 0,
+      "nombre": "Aula 1",
+      "capacidad": 40
+    },
+    {
+      "id": 1,
+      "nombre": "Aula 2",
+      "capacidad": 40
+    },
+    {
+      "id": 2,
+      "nombre": "Aula 3",
+      "capacidad": 40
+    },
+    {
+      "id": 3,
+      "nombre": "Aula 4",
+      "capacidad": 40
+    },
+    {
+      "id": 4,
+      "nombre": "Aula 5",
+      "capacidad": 40
+    },
+    {
+      "id": 5,
+      "nombre": "Aula 6",
+      "capacidad": 40
+    },
+    {
+      "id": 6,
+      "nombre": "Aula 7",
+      "capacidad": 40
+    },
+    {
+      "id": 7,
+      "nombre": "Aula 8",
+      "capacidad": 40
+    },
+    {
+      "id": 8,
+      "nombre": "Aula 9",
+      "capacidad": 40
+    },
+    {
+      "id": 9,
+      "nombre": "Aula 10",
+      "capacidad": 40
+    }
+  ],
+  "asignaciones": {
+    "0": {
+      "1": 21,
+      "11": 17,
+      "15": 24,
+      "2": 19,
+      "19": 15
+    },
+    "1": {
+      "13": 10,
+      "10": 23,
+      "7": 11,
+      "6": 6,
+      "20": 16
+    },
+    "2": {
+      "13": 10,
+      "10": 23,
+      "7": 11,
+      "6": 6,
+      "20": 16
+    },
+    "3": {
+      "13": 0,
+      "18": 14,
+      "10": 8,
+      "7": 22,
+      "6": 9,
+      "20": 2
+    },
+    "4": {
+      "16": 18,
+      "17": 13,
+      "29": 24,
+      "31": 9
+    },
+    "5": {
+      "9": 0,
+      "5": 5,
+      "3": 12,
+      "30": 11,
+      "23": 2,
+      "12": 20
+    },
+    "6": {
+      "9": 0,
+      "5": 5,
+      "3": 12,
+      "30": 11,
+      "23": 2,
+      "12": 20
+    },
+    "7": {
+      "9": 7,
+      "5": 1,
+      "3": 12,
+      "30": 22,
+      "23": 14,
+      "12": 24
+    },
+    "8": {
+      "4": 8,
+      "24": 18,
+      "27": 22,
+      "14": 4,
+      "28": 3
+    },
+    "9": {
+      "22": 23,
+      "25": 15,
+      "21": 3,
+      "8": 4,
+      "26": 16,
+      "0": 21
+    },
+    "10": {
+      "22": 15,
+      "25": 17,
+      "21": 1,
+      "8": 19,
+      "26": 21,
+      "0": 8
+    }
+  }
+}
