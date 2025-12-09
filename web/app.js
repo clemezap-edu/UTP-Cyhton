@@ -242,10 +242,8 @@ function renderDashboard() {
             </div>
             
             <!-- Acciones principales -->
-            <div class="grid lg:grid-cols-2 gap-6">
+            <div class="grid lg:grid-cols-1 gap-6">
                 ${ActionCard('upload', 'Importar Datos', 'Carga el archivo json.', 'importarDatos()')}
-                ${ActionCard('play', 'Generar Horario', 'Ejecutar el sistema de generación de horarios.', 'generarHorario()', true)}
-                <!-- ${ActionCard('file', 'Ver Reportes', 'Consultar reportes detallados, análisis de calidad y documentos de exportación.', 'verReportes()')} -->
             </div>
  
             <div class="grid lg:grid-cols-2 gap-6">
